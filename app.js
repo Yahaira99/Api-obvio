@@ -2,23 +2,23 @@ var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var mysql = require('mysql');
-var connection  = require('./lib/db');
+var connection = require('./lib/db');
 var indexRouter = require('./routes/index');
-var clientesRouter = require('./routes/clientes');
+var personasRouter = require('./routes/personas');
 var app = express();
 var cors = require('cors');
 
 var config = {
   application: {
-      cors: {
-          server: [
-              {
-                  origin: "*", //servidor que deseas que consuma o (*) en caso que sea acceso libre
-                  credentials: true
-              }
-          ]
-      }
-}
+    cors: {
+      server: [
+        {
+          origin: "*", //servidor que deseas que consuma o (*) en caso que sea acceso libre
+          credentials: true
+        }
+      ]
+    }
+  }
 }
 
 app.use(cors(
@@ -36,14 +36,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 
-app.use('/clientes', clientesRouter);
+app.use('/personas', personasRouter);
 
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
-app.use(function(err, req, res, next) {
- 
+app.use(function (err, req, res, next) {
+
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
